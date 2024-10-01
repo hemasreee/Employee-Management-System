@@ -1,0 +1,86 @@
+class Employee:
+    def __init__(self, emp_id, name, position):
+        self.emp_id = emp_id
+        self.name = name
+        self.position = position
+
+    def __str__(self):
+        return f"ID: {self.emp_id}, Name: {self.name}, Position: {self.position}"
+
+
+class EmployeeManagementSystem:
+    def __init__(self):
+        self.employees = {}
+
+    def add_employee(self, emp_id, name, position):
+        if emp_id in self.employees:
+            print("Employee ID already exists.")
+        else:
+            self.employees[emp_id] = Employee(emp_id, name, position)
+            print("Employee added successfully.")
+
+    def view_employees(self):
+        if not self.employees:
+            print("No employees to display.")
+            return
+        for emp in self.employees.values():
+            print(emp)
+
+    def update_employee(self, emp_id, name=None, position=None):
+        if emp_id not in self.employees:
+            print("Employee ID not found.")
+        else:
+            if name:
+                self.employees[emp_id].name = name
+            if position:
+                self.employees[emp_id].position = position
+            print("Employee updated successfully.")
+
+    def delete_employee(self, emp_id):
+        if emp_id in self.employees:
+            del self.employees[emp_id]
+            print("Employee deleted successfully.")
+        else:
+            print("Employee ID not found.")
+
+    def menu(self):
+        while True:
+            print("\nEmployee Management System")
+            print("1. Add Employee")
+            print("2. View Employees")
+            print("3. Update Employee")
+            print("4. Delete Employee")
+            print("5. Exit")
+
+            choice = input("Choose an option: ")
+
+            if choice == '1':
+                emp_id = input("Enter Employee ID: ")
+                name = input("Enter Employee Name: ")
+                position = input("Enter Employee Position: ")
+                self.add_employee(emp_id, name, position)
+
+            elif choice == '2':
+                self.view_employees()
+
+            elif choice == '3':
+                emp_id = input("Enter Employee ID to update: ")
+                name = input("Enter new name (leave blank to keep current): ")
+                position = input("Enter new position (leave blank to keep current): ")
+                self.update_employee(emp_id, name if name else None, position if position else None)
+
+            elif choice == '4':
+                emp_id = input("Enter Employee ID to delete: ")
+                self.delete_employee(emp_id)
+
+            elif choice == '5':
+                print("Exiting the system.")
+                break
+
+            else:
+                print("Invalid choice. Please try again.")
+
+
+if __name__ == "__main__":
+    ems = EmployeeManagementSystem()
+    ems.menu()
